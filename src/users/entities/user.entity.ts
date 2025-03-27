@@ -35,12 +35,6 @@ export class User {
   })
   password: string;
 
-  @Column({
-    type: 'boolean',
-    default: false,
-  })
-  isActive: boolean;
-
   @CreateDateColumn()
   createdAt: Date;
 
@@ -53,7 +47,6 @@ export class User {
   @BeforeInsert()
   beforeInsert() {
     if (!this.password) return;
-    console.log('Hashing password>> ', this.password);
     this.password = bcrypt.hashSync(this.password, 10);
   }
 }

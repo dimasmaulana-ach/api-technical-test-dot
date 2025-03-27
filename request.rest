@@ -1,0 +1,46 @@
+
+
+###
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "name": "Admin 3",
+    "email": "admin3@gmail.com",
+    "password": "admin123",
+    "isActive": true
+}
+
+
+###
+GET http://localhost:3000/api/users
+Content-Type: application/json
+
+
+###
+GET http://localhost:3000/api/users/615704d1-6b01-4d05-9288-91e5a1f17d4b
+
+### 
+PATCH  http://localhost:3000/api/users/b6b54da5-8ea9-4279-9bb0-49b5eba7d8ca
+Content-Type: application/json
+
+{
+    "name": "Admin 9",
+    "email": "admin9@gmail.com",
+    "password": "admin123",
+    "isActive": true
+}
+
+
+###
+DELETE http://localhost:3000/api/users/b6b54da5-8ea9-4279-9bb0-49b5eba7d8ca
+
+
+###
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password" : "admin123"
+}
