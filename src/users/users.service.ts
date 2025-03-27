@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -40,7 +40,15 @@ export class UsersService {
       sort = 'ASC';
     }
 
-    const query = this.userRepository.createQueryBuilder('user');
+    const query = this.userRepository
+      .createQueryBuilder('user')
+      .select([
+        'user.id',
+        'user.name',
+        'user.email',
+        'user.createdAt',
+        'user.updatedAt',
+      ]);
     if (search) {
       query.where('user.name LIKE :search', {
         search: `%${search}%`,
@@ -78,66 +86,93 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    const user = await this.userRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
-    if (!user) {
+    try {
+      const user = await this.userRepository
+        .createQueryBuilder('user')
+        .select([
+          'user.id',
+          'user.name',
+          'user.email',
+          'user.createdAt',
+          'user.updatedAt',
+        ])
+        .where('user.id = :id', { id: id })
+        .getOne();
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
       return {
-        message: 'User not found',
+        message: 'User retrieved successfully',
+        data: user,
       };
+    } catch (error) {
+      if (error.name === 'EntityNotFoundError') {
+        throw new NotFoundException('User not found');
+      }
+      throw error;
     }
-    return {
-      message: 'User retrieved successfully',
-      data: user,
-    };
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    const user = await this.userRepository.findOneOrFail({
-      where: {
-        id: id,
-      },
-    });
-    if (!user) {
+    try {
+      const user = await this.userRepository.findOne({
+        where: {
+          id: id,
+        },
+      });
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+
+      if (updateUserDto.password) {
+        updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10);
+      }
+
+      await this.userRepository.update(id, updateUserDto);
+
+      const updatedUserData = await this.userRepository
+        .createQueryBuilder('user')
+        .select([
+          'user.id',
+          'user.name',
+          'user.email',
+          'user.createdAt',
+          'user.updatedAt',
+        ])
+        .where('user.id = :id', { id: id })
+        .getOne();
+
       return {
-        message: 'User not found',
+        message: 'User updated successfully',
+        data: updatedUserData,
       };
+    } catch (error) {
+      if (error.name === 'EntityNotFoundError') {
+        throw new NotFoundException('User not found');
+      }
+      throw error;
     }
-
-    if (updateUserDto.password) {
-      updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10);
-    }
-
-    await this.userRepository.update(id, updateUserDto);
-
-    const updatedUserData = await this.userRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
-
-    return {
-      message: 'User updated successfully',
-      data: updatedUserData,
-    };
   }
 
   async remove(id: string) {
-    const user = await this.userRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
-    if (!user) {
+    try {
+      const user = await this.userRepository.findOne({
+        where: {
+          id: id,
+        },
+      });
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+      await this.userRepository.delete(id);
       return {
-        message: 'User not found',
+        message: 'User deleted successfully',
       };
+    } catch (error) {
+      if (error.name === 'EntityNotFoundError') {
+        throw new NotFoundException('User not found');
+      }
+      throw error;
     }
-    await this.userRepository.delete(id);
-    return {
-      message: 'User deleted successfully',
-    };
   }
 }

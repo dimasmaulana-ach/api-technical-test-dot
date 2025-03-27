@@ -20,14 +20,13 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTU3MDRkMS02YjAxLTRkMDUtOTI4OC05MWU1YTFmMTdkNGIiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE3NDMwOTQ3NjMsImV4cCI6MTc0MzE4MTE2M30.n7Q7BKCEkYUC-9Fv2IKchXXGvadaqu6r4oSkof7OYiI
 
 ### 
-PATCH  http://localhost:3000/api/users/b6b54da5-8ea9-4279-9bb0-49b5eba7d8ca
+PATCH  http://localhost:3000/api/users/de459a16-906d-4156-a8f7-850fa815687b
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTU3MDRkMS02YjAxLTRkMDUtOTI4OC05MWU1YTFmMTdkNGIiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE3NDMwOTQ3NjMsImV4cCI6MTc0MzE4MTE2M30.n7Q7BKCEkYUC-9Fv2IKchXXGvadaqu6r4oSkof7OYiI
 
 {
-    "name": "Admin 9",
-    "email": "admin9@gmail.com",
-    "password": "admin123",
-    "isActive": true
+    "name": "Admin 1",
+    "email": "admin1@gmail.com"
 }
 
 ###
@@ -41,3 +40,106 @@ Content-Type: application/json
     "email": "admin@gmail.com",
     "password" : "admin123"
 }
+
+#####################
+#### Task Status ####
+#####################
+
+###
+POST http://localhost:3000/api/task-status
+Content-Type: application/json
+
+{
+    "name": "Todo",
+    "description": "Task is currently being worked on",
+    "sequence": "1",
+    "color": "#50ff99"
+}
+
+
+###
+GET http://localhost:3000/api/task-status
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/task-status/a0636b78-7c1a-459d-b7e7-ec0c86f8c162
+Content-Type: application/json
+
+###
+PATCH http://localhost:3000/api/task-status/4c53f60f-184b-49ff-9744-17ebb12c8c78
+Content-Type: application/json
+
+{
+    "description": "Task is currently waiting for progress"
+}
+
+###
+DELETE http://localhost:3000/api/task-status/83ace11e-25fd-40d5-86d6-cd3fd5055b23
+Content-Type: application/json
+
+###
+POST http://localhost:3000/api/task-status/bulk
+Content-Type: application/json
+
+{
+    "taskStatus": [
+         {
+            "name": "Hold",
+            "description": "Task is currently on hold",
+            "sequence": "1",
+            "color": "#909090"
+        },
+        {
+            "id": "4c53f60f-184b-49ff-9744-17ebb12c8c78",
+            "name": "Todo",
+            "description": "Task is currently waiting for progress",
+            "sequence": "2",
+            "color": "#50ff99"
+        },
+        {
+            "id": "a0636b78-7c1a-459d-b7e7-ec0c86f8c162",
+            "name": "In Progress",
+            "description": "Task is currently being worked on",
+            "sequence": "3",
+            "color": "#FF9606"
+        }
+    ]
+}
+
+
+#######################
+#### Task Priority ####
+#######################
+
+###
+POST http://localhost:3000/api/task-priority
+Content-Type: application/json
+
+{
+    "name": "Deleted",
+    "description": "Task is of low priority",
+    "level": "3",
+    "color": "#50ff99"
+}
+
+###
+GET http://localhost:3000/api/task-priority
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/task-priority/fceaa654-971d-4d24-a374-616ad242646d
+
+
+###
+PATCH http://localhost:3000/api/task-priority/705f179d-d31a-4aff-a1d4-2f956df6fba2
+Content-Type: application/json
+
+{
+    "name": "Very Low",
+    "description": "Task is of very low priority",
+    "level": "4",
+    "color": "#50ff99"
+}
+
+###
+DELETE http://localhost:3000/api/task-priority/744d935f-2d85-4d7c-b04a-818c23f26afc
