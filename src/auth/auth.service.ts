@@ -4,14 +4,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { LoginAuthDto } from './dto/login-auth.dto';
-import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private jwtService: JwtService,
   ) {}
 
   async register(registerAuthDto: RegisterAuthDto) {
@@ -19,11 +20,10 @@ export class AuthService {
     const data = this.userRepository.create(body);
     const result = await this.userRepository.save(data);
 
-    const token = jwt.sign(
-      { uid: result.id, name: result.name },
-      process.env.JWT_SECRET || 'cskandldanscoadadaqwedq',
-      { expiresIn: '1d' },
-    );
+    const token = await this.jwtService.signAsync({
+      uid: result.id,
+      name: result.name,
+    });
 
     return {
       message: 'Registration successful',
@@ -51,11 +51,10 @@ export class AuthService {
       throw new Error('Invalid credentials');
     }
 
-    const token = jwt.sign(
-      { uid: user.id, name: user.name },
-      process.env.JWT_SECRET || 'cskandldanscoadadaqwedq',
-      { expiresIn: '1d' },
-    );
+    const token = await this.jwtService.signAsync({
+      uid: user.id,
+      name: user.name,
+    });
 
     return {
       message: 'Login successful',
