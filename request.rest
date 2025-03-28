@@ -57,12 +57,13 @@ Content-Type: application/json
 ###
 POST http://localhost:3000/api/task-status
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTU3MDRkMS02YjAxLTRkMDUtOTI4OC05MWU1YTFmMTdkNGIiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE3NDMwOTQ3NjMsImV4cCI6MTc0MzE4MTE2M30.n7Q7BKCEkYUC-9Fv2IKchXXGvadaqu6r4oSkof7OYiI
 
 {
-    "name": "Todo",
-    "description": "Task is currently being worked on",
-    "sequence": "1",
-    "color": "#50ff99"
+    "name": "Adjustment",
+    "description": "Task is currently being adjusted",
+    "sequence": "5",
+    "color": "#FF9606"
 }
 
 

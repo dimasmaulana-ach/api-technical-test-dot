@@ -24,7 +24,7 @@ export class TaskStatusService {
 
   async findAll() {
     const data = await this.taskStatusRepository.find({
-      relations: ['taskManagements'],
+      relations: ['taskManagements', 'taskManagements.taskStatus'],
       select: {
         id: true,
         name: true,
@@ -61,7 +61,7 @@ export class TaskStatusService {
   async findOne(id: string) {
     const data = await this.taskStatusRepository.findOne({
       where: { id },
-      relations: ['taskManagements'],
+      relations: ['taskManagements', 'taskManagements.taskStatus'],
       select: {
         id: true,
         name: true,
@@ -103,19 +103,33 @@ export class TaskStatusService {
 
     await this.taskStatusRepository.update(id, updateTaskStatusDto);
 
-    const data = await this.taskStatusRepository
-      .createQueryBuilder('taskStatus')
-      .select([
-        'taskStatus.id',
-        'taskStatus.name',
-        'taskStatus.description',
-        'taskStatus.sequence',
-        'taskStatus.color',
-        'taskStatus.createdAt',
-        'taskStatus.updatedAt',
-      ])
-      .where('taskStatus.id = :id', { id })
-      .getOne();
+    const data = await this.taskStatusRepository.findOne({
+      where: { id },
+      relations: ['taskManagements', 'taskManagements.taskStatus'],
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        sequence: true,
+        color: true,
+        createdAt: true,
+        updatedAt: true,
+        taskManagements: {
+          id: true,
+          name: true,
+          description: true,
+          targetDate: true,
+          taskStatus: {
+            id: true,
+            name: true,
+            color: true,
+          },
+          actualDate: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+    });
     if (!data) {
       throw new NotFoundException(`TaskStatus with id ${id} not found`);
     }
@@ -160,18 +174,32 @@ export class TaskStatusService {
     }
 
     // Ambil data terbaru dari database
-    const data = await this.taskStatusRepository
-      .createQueryBuilder('taskStatus')
-      .select([
-        'taskStatus.id',
-        'taskStatus.name',
-        'taskStatus.description',
-        'taskStatus.sequence',
-        'taskStatus.color',
-        'taskStatus.createdAt',
-        'taskStatus.updatedAt',
-      ])
-      .getMany();
+    const data = await this.taskStatusRepository.find({
+      relations: ['taskManagements', 'taskManagements.taskStatus'],
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        sequence: true,
+        color: true,
+        createdAt: true,
+        updatedAt: true,
+        taskManagements: {
+          id: true,
+          name: true,
+          description: true,
+          targetDate: true,
+          taskStatus: {
+            id: true,
+            name: true,
+            color: true,
+          },
+          actualDate: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+    });
 
     return {
       message: 'TaskStatus updated successfully',
