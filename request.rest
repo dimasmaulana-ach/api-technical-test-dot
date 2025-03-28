@@ -6,7 +6,6 @@ Content-Type: application/json
     "name": "Admin 3",
     "email": "admin3@gmail.com",
     "password": "admin123",
-    "isActive": true
 }
 
 ###
@@ -39,6 +38,16 @@ Content-Type: application/json
 {
     "email": "admin@gmail.com",
     "password" : "admin123"
+}
+
+###
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+    "name": "Admin 2",
+    "email": "admin2@gmail.com",
+    "password": "admin123"
 }
 
 #####################

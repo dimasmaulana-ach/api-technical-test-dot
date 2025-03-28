@@ -23,19 +23,32 @@ export class TaskStatusService {
   }
 
   async findAll() {
-    const data = await this.taskStatusRepository
-      .createQueryBuilder('taskStatus')
-      .select([
-        'taskStatus.id',
-        'taskStatus.name',
-        'taskStatus.description',
-        'taskStatus.sequence',
-        'taskStatus.color',
-        'taskStatus.createdAt',
-        'taskStatus.updatedAt',
-      ])
-      .orderBy('taskStatus.sequence', 'ASC')
-      .getMany();
+    const data = await this.taskStatusRepository.find({
+      relations: ['taskManagements'],
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        sequence: true,
+        color: true,
+        createdAt: true,
+        updatedAt: true,
+        taskManagements: {
+          id: true,
+          name: true,
+          description: true,
+          targetDate: true,
+          taskStatus: {
+            id: true,
+            name: true,
+            color: true,
+          },
+          actualDate: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+    });
     return {
       message: 'Task Status retrieved successfully',
       data: data,
@@ -43,19 +56,33 @@ export class TaskStatusService {
   }
 
   async findOne(id: string) {
-    const data = await this.taskStatusRepository
-      .createQueryBuilder('taskStatus')
-      .select([
-        'taskStatus.id',
-        'taskStatus.name',
-        'taskStatus.description',
-        'taskStatus.sequence',
-        'taskStatus.color',
-        'taskStatus.createdAt',
-        'taskStatus.updatedAt',
-      ])
-      .where('taskStatus.id = :id', { id })
-      .getOne();
+    const data = await this.taskStatusRepository.findOne({
+      where: { id },
+      relations: ['taskManagements'],
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        sequence: true,
+        color: true,
+        createdAt: true,
+        updatedAt: true,
+        taskManagements: {
+          id: true,
+          name: true,
+          description: true,
+          targetDate: true,
+          taskStatus: {
+            id: true,
+            name: true,
+            color: true,
+          },
+          actualDate: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+    });
     if (!data) {
       throw new NotFoundException(`TaskStatus with id ${id} not found`);
     }
