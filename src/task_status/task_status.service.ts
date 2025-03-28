@@ -24,7 +24,7 @@ export class TaskStatusService {
 
   async findAll() {
     const data = await this.taskStatusRepository.find({
-      relations: ['taskManagements', 'taskManagements.taskStatus'],
+      relations: ['taskManagements', 'taskManagements.taskPriority'],
       select: {
         id: true,
         name: true,
@@ -38,7 +38,7 @@ export class TaskStatusService {
           name: true,
           description: true,
           targetDate: true,
-          taskStatus: {
+          taskPriority: {
             id: true,
             name: true,
             color: true,
@@ -61,7 +61,7 @@ export class TaskStatusService {
   async findOne(id: string) {
     const data = await this.taskStatusRepository.findOne({
       where: { id },
-      relations: ['taskManagements', 'taskManagements.taskStatus'],
+      relations: ['taskManagements', 'taskManagements.taskPriority'],
       select: {
         id: true,
         name: true,
@@ -75,7 +75,7 @@ export class TaskStatusService {
           name: true,
           description: true,
           targetDate: true,
-          taskStatus: {
+          taskPriority: {
             id: true,
             name: true,
             color: true,
@@ -105,7 +105,7 @@ export class TaskStatusService {
 
     const data = await this.taskStatusRepository.findOne({
       where: { id },
-      relations: ['taskManagements', 'taskManagements.taskStatus'],
+      relations: ['taskManagements', 'taskManagements.taskPriority'],
       select: {
         id: true,
         name: true,
@@ -119,7 +119,7 @@ export class TaskStatusService {
           name: true,
           description: true,
           targetDate: true,
-          taskStatus: {
+          taskPriority: {
             id: true,
             name: true,
             color: true,
@@ -175,7 +175,7 @@ export class TaskStatusService {
 
     // Ambil data terbaru dari database
     const data = await this.taskStatusRepository.find({
-      relations: ['taskManagements', 'taskManagements.taskStatus'],
+      relations: ['taskManagements', 'taskManagements.taskPriority'],
       select: {
         id: true,
         name: true,
@@ -189,7 +189,7 @@ export class TaskStatusService {
           name: true,
           description: true,
           targetDate: true,
-          taskStatus: {
+          taskPriority: {
             id: true,
             name: true,
             color: true,
