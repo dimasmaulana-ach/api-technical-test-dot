@@ -48,6 +48,9 @@ export class TaskStatusService {
           updatedAt: true,
         },
       },
+      order: {
+        sequence: 'ASC',
+      },
     });
     return {
       message: 'Task Status retrieved successfully',
