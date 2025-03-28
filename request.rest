@@ -60,10 +60,12 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/api/task-status
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTU3MDRkMS02YjAxLTRkMDUtOTI4OC05MWU1YTFmMTdkNGIiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE3NDMwOTQ3NjMsImV4cCI6MTc0MzE4MTE2M30.n7Q7BKCEkYUC-9Fv2IKchXXGvadaqu6r4oSkof7OYiI
 
 ###
 GET http://localhost:3000/api/task-status/a0636b78-7c1a-459d-b7e7-ec0c86f8c162
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTU3MDRkMS02YjAxLTRkMDUtOTI4OC05MWU1YTFmMTdkNGIiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE3NDMwOTQ3NjMsImV4cCI6MTc0MzE4MTE2M30.n7Q7BKCEkYUC-9Fv2IKchXXGvadaqu6r4oSkof7OYiI
 
 ###
 PATCH http://localhost:3000/api/task-status/4c53f60f-184b-49ff-9744-17ebb12c8c78
@@ -114,6 +116,7 @@ Content-Type: application/json
 ###
 POST http://localhost:3000/api/task-priority
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTU3MDRkMS02YjAxLTRkMDUtOTI4OC05MWU1YTFmMTdkNGIiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE3NDMwOTQ3NjMsImV4cCI6MTc0MzE4MTE2M30.n7Q7BKCEkYUC-9Fv2IKchXXGvadaqu6r4oSkof7OYiI
 
 {
     "name": "Deleted",
@@ -125,10 +128,12 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/api/task-priority
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTU3MDRkMS02YjAxLTRkMDUtOTI4OC05MWU1YTFmMTdkNGIiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE3NDMwOTQ3NjMsImV4cCI6MTc0MzE4MTE2M30.n7Q7BKCEkYUC-9Fv2IKchXXGvadaqu6r4oSkof7OYiI
 
 ###
 GET http://localhost:3000/api/task-priority/fceaa654-971d-4d24-a374-616ad242646d
-
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTU3MDRkMS02YjAxLTRkMDUtOTI4OC05MWU1YTFmMTdkNGIiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE3NDMwOTQ3NjMsImV4cCI6MTc0MzE4MTE2M30.n7Q7BKCEkYUC-9Fv2IKchXXGvadaqu6r4oSkof7OYiI
 
 ###
 PATCH http://localhost:3000/api/task-priority/705f179d-d31a-4aff-a1d4-2f956df6fba2
@@ -143,3 +148,39 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3000/api/task-priority/744d935f-2d85-4d7c-b04a-818c23f26afc
+
+
+##############
+#### Task ####
+##############
+
+###
+POST http://localhost:3000/api/task-management
+Content-Type: application/json
+
+{
+    "name": "Task 2",
+    "description": "Task 2 description",
+    "taskStatusId": "4c53f60f-184b-49ff-9744-17ebb12c8c78",
+    "taskPriorityId": "55e508d9-1e96-43db-8029-7c684bc608f7",
+    "userIds": ["615704d1-6b01-4d05-9288-91e5a1f17d4b","de459a16-906d-4156-a8f7-850fa815687b"]
+}
+
+###
+GET http://localhost:3000/api/task-management
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/task-management/cb442688-57c3-4f06-a12a-2ccabfbd9987
+
+###
+PATCH  http://localhost:3000/api/task-management/5af66b8f-b0bc-4dc3-b62f-9b84e3dba82e
+Content-Type: application/json
+
+{
+    "userIds": ["de459a16-906d-4156-a8f7-850fa815687b"]
+}
+
+###
+DELETE http://localhost:3000/api/task-management/5af66b8f-b0bc-4dc3-b62f-9b84e3dba82e
+Content-Type: application/json

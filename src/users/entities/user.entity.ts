@@ -4,10 +4,12 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { TaskManagement } from 'src/task_management/entities/task_management.entity';
 
 @Entity({
   name: 'users',
@@ -34,6 +36,15 @@ export class User {
     length: 100,
   })
   password: string;
+
+  /**
+   * @Reference To Task Management Entity
+   */
+  @ManyToMany(() => TaskManagement, (taskManagement) => taskManagement.users, {
+    nullable: true,
+    cascade: ['insert', 'update'],
+  })
+  tasks: TaskManagement[];
 
   @CreateDateColumn()
   createdAt: Date;

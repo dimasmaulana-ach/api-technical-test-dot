@@ -14,7 +14,7 @@ export class TaskPriorityService {
 
   async create(createTaskPriorityDto: CreateTaskPriorityDto) {
     const body = createTaskPriorityDto;
-    const taskPriority = this.taskPriorityRepository.create(body);
+    const taskPriority = await this.taskPriorityRepository.create(body);
     await this.taskPriorityRepository.save(taskPriority);
     return {
       message: 'Task Priority created successfully',
