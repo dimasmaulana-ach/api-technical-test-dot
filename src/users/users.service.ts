@@ -46,6 +46,7 @@ export class UsersService {
         'user.id',
         'user.name',
         'user.email',
+        'user.role',
         'user.createdAt',
         'user.updatedAt',
       ]);
@@ -93,6 +94,7 @@ export class UsersService {
           'user.id',
           'user.name',
           'user.email',
+          'user.role',
           'user.createdAt',
           'user.updatedAt',
         ])
@@ -136,6 +138,7 @@ export class UsersService {
           'user.id',
           'user.name',
           'user.email',
+          'user.role',
           'user.createdAt',
           'user.updatedAt',
         ])
